@@ -32,9 +32,16 @@ public class ProductService {
 
   public List<ProductResponse> getAllProducts() {
     List<Product> products = productRepository.findAll();
-    products.stream().map(product -> mapToProductResponse())
+    return products.stream().map(this::mapToProductResponse).toList();
   }
 
-  private Object mapToProductResponse() {
+  private ProductResponse mapToProductResponse(Product product) {
+    return ProductResponse.builder()
+      .id(product.getId())
+      .name(product.getName())
+      .description(product.getDescription())
+      .price(product.getPrice())
+      .build();
+
   }
 }
